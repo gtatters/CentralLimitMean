@@ -2,7 +2,6 @@
 
 #shinylive::export(appdir = "../CentralLimitMean/", destdir = "docs")
 #httpuv::runStaticServer("docs/", port = 8008)
-#library(shiny)
 
 # Define UI --------------------------------------------------------------------
 
