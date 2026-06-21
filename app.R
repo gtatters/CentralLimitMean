@@ -306,12 +306,12 @@ server <- function(input, output, session) {
     n      <- input$n
     k      <- input$k
     pop    <- parent()
-    m_pop  <- round(mean(pop), 2)
-    sd_pop <- round(sd(pop),   2)
+    m_pop  <- round(mean(pop), 4)
+    sd_pop <- round(sd(pop),   4)
     
     means   <- sample_means()
-    m_samp  <- round(mean(means), 2)
-    sd_samp <- round(sd(means),   2)
+    m_samp  <- round(mean(means), 4)
+    sd_samp <- round(sd(means),   4)
     
     if (input$dist == "runif" && u_min() == u_max()) return(invisible(NULL))
     
@@ -330,8 +330,9 @@ server <- function(input, output, session) {
     lines(d, col = "#009499", lwd = 2)
     
     # --- NEW: overlay ideal normal curve using CLT-predicted mean and SE ----
-    x_seq <- seq(min(means) - sd_samp, max(means) + sd_samp, length.out = 300)
-    lines(x_seq, dnorm(x_seq, mean = m_samp, sd = sd_samp),
+    se_clt <- sd_pop / sqrt(n)
+    x_seq <- seq(min(means) - 4*se_clt, max(means) + 4*se_clt, length.out = 300)
+    lines(x_seq, dnorm(x_seq, mean = m_samp, sd = se_clt),
           col = "#E07B39", lwd = 2.5, lty = 2)
     
     legend("topright",
@@ -342,7 +343,8 @@ server <- function(input, output, session) {
            bty    = "n",
            cex    = 1.0)
     
-    label <- paste0("mean of x\u0304 = ", m_samp, "\nSE of x\u0304 = ", sd_samp)
+    label <- paste0("mean of x\u0304 = ", round(m_samp, 2),
+                    "\nSE of x\u0304 = ", round(sd_samp, 4))
     text(x_pos, y_pos, labels = label, col = "black", cex = 1.1)
   })
   
