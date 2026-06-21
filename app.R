@@ -232,7 +232,7 @@ server <- function(input, output, session) {
                 m_pop, sd_pop, cex_base = cex_base)
       
     } else if (input$dist == "rbeta") {
-      x_pos <- min(pop) + 0.1 * x_rng
+      x_pos <- max(pop) - 0.25 * x_rng
       plot_dist(pop, distname, "#195190", x_pos, y_pos,
                 m_pop, sd_pop, cex_base = cex_base)
     }
@@ -321,7 +321,7 @@ server <- function(input, output, session) {
     x_pos  <- if (m_samp > 0) min(means) + 0.1 * x_rng
     else             max(means) - 0.1 * x_rng
     
-    hist(means, breaks = 20, freq = FALSE,
+    hist(means, freq = FALSE,
          col = "#009499", border = "white",
          main = "Sampling Distribution*",
          xlab = "Sample means", ylab = "",
